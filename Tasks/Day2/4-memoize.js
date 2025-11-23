@@ -3,14 +3,14 @@
 // implement memoize
 
 const memoize = (f) => {
-  const map = new Map();
+  const cache = new Map();
   return (...args) => {
-    const result = f(...args);
-    const cached = map.get(result);
-    if (cached) {
-      return cached;
+    const key = JSON.stringify(args);
+    if (cache.has(key)) {
+      return cache.get(key);
     }
-    map.set(result, result);
+    const result = f(...args);
+    cache.set(result, result);
     return result;
   };
 };
